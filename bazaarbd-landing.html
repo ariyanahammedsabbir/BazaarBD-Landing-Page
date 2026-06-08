@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BazaarBD — বাংলাদেশের সেরা মাল্টি-ভেন্ডর মার্কেটপ্লেস</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0D0D0D;
+    --ink2: #3a3a3a;
+    --muted: #7a7a7a;
+    --line: #e5e5e5;
+    --bg: #FAFAF8;
+    --white: #ffffff;
+    --accent: #E8421A;
+    --accent2: #1A6EE8;
+    --teal: #0D9E75;
+    --amber: #F5A623;
+    --card-r: 16px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800; font-size: 22px;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; font-size: 14px; color: var(--ink2); }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    display: flex; gap: 10px; align-items: center;
+  }
+  .btn-outline {
+    padding: 8px 18px; border: 1.5px solid var(--ink); border-radius: 100px;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--white); }
+  .btn-primary {
+    padding: 8px 18px; background: var(--accent); color: var(--white);
+    border: none; border-radius: 100px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: .85; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 5% 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    min-height: 88vh;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #FEF0EC; color: var(--accent);
+    padding: 5px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; letter-spacing: .04em;
+    margin-bottom: 20px;
+  }
+  .hero-tag::before { content:''; width:6px;height:6px;border-radius:50%;background:var(--accent); }
+  h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(32px, 4vw, 54px);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub {
+    font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 32px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn-big {
+    padding: 14px 28px; border-radius: 100px; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-big.primary { background: var(--accent); color: var(--white); border: none; }
+  .btn-big.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,66,26,.3); }
+  .btn-big.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn-big.ghost:hover { border-color: var(--ink); }
+  .hero-stats {
+    display: flex; gap: 32px;
+  }
+  .stat-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 26px; font-weight: 700; color: var(--ink);
+    line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* HERO RIGHT — search + categories */
+  .hero-right {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 4px 40px rgba(0,0,0,.06);
+  }
+  .search-wrap {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg); border: 1.5px solid var(--line);
+    border-radius: 100px; padding: 10px 16px;
+    margin-bottom: 22px;
+  }
+  .search-wrap svg { flex-shrink:0; color: var(--muted); }
+  .search-wrap input {
+    border: none; background: transparent; font-family: inherit;
+    font-size: 14px; color: var(--ink); outline: none; width: 100%;
+  }
+  .search-wrap input::placeholder { color: var(--muted); }
+  .search-btn {
+    background: var(--accent); color: var(--white); border: none;
+    border-radius: 100px; padding: 8px 18px; font-size: 13px; font-weight: 600;
+    cursor: pointer; white-space: nowrap;
+  }
+  .cat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .cat-card {
+    border: 1px solid var(--line); border-radius: 14px;
+    padding: 16px; cursor: pointer;
+    transition: all .2s; position: relative; overflow: hidden;
+  }
+  .cat-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .cat-icon { font-size: 28px; margin-bottom: 8px; }
+  .cat-name { font-weight: 600; font-size: 14px; }
+  .cat-count { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .cat-badge {
+    position: absolute; top: 10px; right: 10px;
+    background: var(--bg); border: 1px solid var(--line);
+    font-size: 10px; padding: 2px 8px; border-radius: 100px; color: var(--muted);
+  }
+  .hero-trust {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .trust-pill {
+    display: flex; align-items: center; gap: 5px;
+    background: #F0FAF5; color: #0a6b4e;
+    border-radius: 100px; padding: 5px 12px; font-size: 12px; font-weight: 500;
+  }
+  .trust-pill svg { width:13px; height:13px; }
+
+  /* SECTION COMMON */
+  section { padding: 80px 5%; }
+  .sec-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+  }
+  .sec-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(24px, 3vw, 38px); font-weight: 700;
+    letter-spacing: -0.5px; margin-bottom: 12px;
+  }
+  .sec-sub { font-size: 15px; color: var(--muted); max-width: 520px; }
+  .sec-header { margin-bottom: 40px; }
+  .sec-header.row { display: flex; justify-content: space-between; align-items: flex-end; }
+  .see-all { font-size: 13px; font-weight: 500; color: var(--accent); }
+
+  /* VENDORS */
+  .vendors-bg { background: var(--white); }
+  .vendor-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
+  }
+  .vendor-card {
+    border: 1px solid var(--line); border-radius: var(--card-r);
+    padding: 20px; transition: all .2s;
+  }
+  .vendor-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+  .vendor-avatar {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 16px;
+    margin-bottom: 12px;
+  }
+  .vendor-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+  .vendor-cat { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .vendor-meta { display: flex; justify-content: space-between; align-items: center; }
+  .rating { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; }
+  .rating svg { color: var(--amber); }
+  .verified-badge {
+    background: #F0FAF5; color: #0a6b4e;
+    font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 100px;
+  }
+
+  /* FEATURED PRODUCTS */
+  .products-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px;
+  }
+  .product-card {
+    border: 1px solid var(--line); border-radius: var(--card-r);
+    overflow: hidden; transition: all .2s; cursor: pointer;
+  }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+  .product-img {
+    height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+  }
+  .product-body { padding: 14px; background: var(--white); }
+  .product-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .product-vendor { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+  .product-price { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 16px; color: var(--accent); }
+  .product-type {
+    float: right; font-size: 10px; padding: 2px 7px;
+    border-radius: 100px; font-weight: 500;
+  }
+  .type-digital { background: #EEF2FF; color: #3B4FBF; }
+  .type-physical { background: #FFF8EC; color: #8B5A00; }
+
+  /* HOW IT WORKS */
+  .how-bg { background: var(--ink); color: var(--white); }
+  .how-bg .sec-label { color: rgba(255,255,255,.4); }
+  .how-bg .sec-title { color: var(--white); }
+  .how-bg .sec-sub { color: rgba(255,255,255,.55); }
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    border: 1px solid rgba(255,255,255,.1); border-radius: 20px; overflow: hidden;
+    margin-top: 48px;
+  }
+  .step {
+    padding: 32px 24px;
+    border-right: 1px solid rgba(255,255,255,.08);
+  }
+  .step:last-child { border-right: none; }
+  .step-num-big {
+    font-family: 'Sora', sans-serif;
+    font-size: 48px; font-weight: 800; color: rgba(255,255,255,.1);
+    line-height: 1; margin-bottom: 20px;
+  }
+  .step-icon { font-size: 28px; margin-bottom: 14px; }
+  .step-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .step-desc { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.6; }
+
+  /* VENDOR CTA */
+  .vendor-cta-section {
+    background: linear-gradient(135deg, #FFF5F2 0%, #FFF8F5 100%);
+    border-top: 1px solid #FFD9CC; border-bottom: 1px solid #FFD9CC;
+  }
+  .vendor-cta-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .benefit-list { list-style: none; margin: 24px 0; display: flex; flex-direction: column; gap: 14px; }
+  .benefit-item { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; }
+  .benefit-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--white); display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+    border: 1px solid var(--line);
+  }
+  .benefit-text strong { display: block; font-weight: 600; font-size: 13px; }
+  .benefit-text span { font-size: 12px; color: var(--muted); }
+
+  /* REGISTRATION FORM PANEL */
+  .reg-panel {
+    background: var(--white); border: 1px solid var(--line);
+    border-radius: 20px; padding: 28px;
+  }
+  .reg-title { font-weight: 700; font-size: 18px; margin-bottom: 4px; }
+  .reg-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-field { margin-bottom: 14px; }
+  .form-field label { display: block; font-size: 12px; font-weight: 500; color: var(--ink2); margin-bottom: 5px; }
+  .form-field input, .form-field select {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--line); border-radius: 10px;
+    font-family: 'Hind Siliguri', sans-serif; font-size: 14px; color: var(--ink);
+    outline: none; transition: border .2s;
+    background: var(--bg);
+  }
+  .form-field input:focus, .form-field select:focus { border-color: var(--accent); background: var(--white); }
+  .form-submit {
+    width: 100%; padding: 13px; background: var(--accent); color: var(--white);
+    border: none; border-radius: 100px; font-family: 'Hind Siliguri', sans-serif;
+    font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px;
+    transition: all .2s;
+  }
+  .form-submit:hover { opacity: .88; transform: translateY(-1px); }
+  .form-note { text-align: center; font-size: 11px; color: var(--muted); margin-top: 10px; }
+
+  /* TRUST SECTION */
+  .trust-section { background: var(--white); }
+  .trust-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .trust-card {
+    border: 1px solid var(--line); border-radius: var(--card-r); padding: 28px 24px;
+    text-align: center;
+  }
+  .trust-card-icon { font-size: 36px; margin-bottom: 14px; }
+  .trust-card-title { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+  .trust-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testimonial-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .testimonial-card {
+    background: var(--white); border: 1px solid var(--line);
+    border-radius: var(--card-r); padding: 24px;
+  }
+  .t-stars { color: var(--amber); font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
+  .t-text { font-size: 14px; color: var(--ink2); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
+  .t-author { display: flex; align-items: center; gap: 10px; }
+  .t-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .t-name { font-weight: 600; font-size: 13px; }
+  .t-role { font-size: 11px; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); color: var(--white);
+    padding: 60px 5% 30px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+    margin-bottom: 48px;
+  }
+  .footer-logo { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; margin-bottom: 12px; }
+  .footer-logo span { color: var(--accent); }
+  .footer-desc { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.7; }
+  .footer-heading { font-weight: 600; font-size: 13px; margin-bottom: 14px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-links a { font-size: 13px; color: rgba(255,255,255,.45); transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding-top: 24px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: rgba(255,255,255,.3);
+  }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { display: none; }
+    .vendor-cta-inner { grid-template-columns: 1fr; }
+    .trust-grid, .testimonial-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Bazaar<span>BD</span></div>
+  <div class="nav-links">
+    <a href="#categories">ক্যাটাগরি</a>
+    <a href="#vendors">ভেন্ডর</a>
+    <a href="#how">কীভাবে কাজ করে</a>
+    <a href="#sell">বিক্রেতা হন</a>
+  </div>
+  <div class="nav-cta">
+    <a href="#" class="btn-outline">লগইন</a>
+    <a href="#sell" class="btn-primary">শপ খুলুন</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div>
+    <div class="hero-tag">🇧🇩 বাংলাদেশের নিজস্ব মার্কেটপ্লেস</div>
+    <h1>একই ছাদের নিচে <em>সেরা পণ্য,</em> সেরা বিক্রেতা</h1>
+    <p class="hero-sub">গ্যাজেট থেকে ডিজিটাল প্রোডাক্ট — হাজারো ভেরিফাইড বিক্রেতার কাছ থেকে নিরাপদে কেনাকাটা করুন।</p>
+    <div class="hero-actions">
+      <button class="btn-big primary" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">কেনাকাটা শুরু করুন</button>
+      <button class="btn-big ghost" onclick="document.getElementById('sell').scrollIntoView({behavior:'smooth'})">বিক্রেতা হিসেবে যোগ দিন</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">৫,০০০+</div><div class="stat-label">অ্যাক্টিভ পণ্য</div></div>
+      <div><div class="stat-num">৩৫০+</div><div class="stat-label">ভেরিফাইড বিক্রেতা</div></div>
+      <div><div class="stat-num">১২,০০০+</div><div class="stat-label">সন্তুষ্ট ক্রেতা</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="search-wrap">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="পণ্য, ব্র্যান্ড বা বিক্রেতা খুঁজুন...">
+      <button class="search-btn">খুঁজুন</button>
+    </div>
+    <div class="cat-grid" id="categories">
+      <div class="cat-card" style="background:#EEF5FF">
+        <div class="cat-badge">নতুন</div>
+        <div class="cat-icon">💻</div>
+        <div class="cat-name">গ্যাজেট</div>
+        <div class="cat-count">১,২৩০টি পণ্য</div>
+      </div>
+      <div class="cat-card" style="background:#FFF0F5">
+        <div class="cat-icon">💄</div>
+        <div class="cat-name">কসমেটিকস</div>
+        <div class="cat-count">৮৫০টি পণ্য</div>
+      </div>
+      <div class="cat-card" style="background:#FFFBF0">
+        <div class="cat-icon">👗</div>
+        <div class="cat-name">পোশাক</div>
+        <div class="cat-count">২,১০০টি পণ্য</div>
+      </div>
+      <div class="cat-card" style="background:#F0FFF8">
+        <div class="cat-badge">ইনস্ট্যান্ট</div>
+        <div class="cat-icon">⬇️</div>
+        <div class="cat-name">ডিজিটাল</div>
+        <div class="cat-count">৪৫০টি পণ্য</div>
+      </div>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-pill">
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        ১০০% ভেরিফাইড
+      </div>
+      <div class="trust-pill">
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+        ৭ দিনের রিটার্ন
+      </div>
+      <div class="trust-pill">
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        নিরাপদ পেমেন্ট
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP VENDORS -->
+<section class="vendors-bg" id="vendors">
+  <div class="sec-header row">
+    <div>
+      <div class="sec-label">মার্কেটপ্লেস</div>
+      <h2 class="sec-title">শীর্ষ ভেরিফাইড বিক্রেতারা</h2>
+    </div>
+    <a href="#" class="see-all">সব বিক্রেতা দেখুন →</a>
+  </div>
+  <div class="vendor-grid">
+    <div class="vendor-card fade-up">
+      <div class="vendor-avatar" style="background:#EEF5FF;color:#1A4FA8">TG</div>
+      <div class="vendor-name">TechGadget BD</div>
+      <div class="vendor-cat">গ্যাজেট ও ইলেকট্রনিক্স</div>
+      <div class="vendor-meta">
+        <div class="rating">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          ৪.৮ (৩৪২)
+        </div>
+        <span class="verified-badge">✓ ভেরিফাইড</span>
+      </div>
+    </div>
+    <div class="vendor-card fade-up">
+      <div class="vendor-avatar" style="background:#FFF0F5;color:#9B2458">GL</div>
+      <div class="vendor-name">GlowLab</div>
+      <div class="vendor-cat">কসমেটিকস ও বিউটি</div>
+      <div class="vendor-meta">
+        <div class="rating">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          ৪.৯ (২১৮)
+        </div>
+        <span class="verified-badge">✓ ভেরিফাইড</span>
+      </div>
+    </div>
+    <div class="vendor-card fade-up">
+      <div class="vendor-avatar" style="background:#FFFBF0;color:#8B5A00">FS</div>
+      <div class="vendor-name">FashionStop</div>
+      <div class="vendor-cat">পোশাক ও ফ্যাশন</div>
+      <div class="vendor-meta">
+        <div class="rating">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          ৪.৭ (৪৮৫)
+        </div>
+        <span class="verified-badge">✓ ভেরিফাইড</span>
+      </div>
+    </div>
+    <div class="vendor-card fade-up">
+      <div class="vendor-avatar" style="background:#F0FFF8;color:#0a6b4e">DF</div>
+      <div class="vendor-name">DigiFront</div>
+      <div class="vendor-cat">ডিজিটাল প্রোডাক্ট</div>
+      <div class="vendor-meta">
+        <div class="rating">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          ৪.৭ (১৯৫)
+        </div>
+        <span class="verified-badge">✓ ভেরিফাইড</span>
+      </div>
+    </div>
+    <div class="vendor-card fade-up">
+      <div class="vendor-avatar" style="background:#F5EEFF;color:#5B2DA8">SM</div>
+      <div class="vendor-name">StyleMart</div>
+      <div class="vendor-cat">পোশাক ও একসেসরিজ</div>
+      <div class="vendor-meta">
+        <div class="rating">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          ৪.৬ (৩১০)
+        </div>
+        <span class="verified-badge">✓ ভেরিফাইড</span>
+      </div>
+    </div>
+    <div class="vendor-card fade-up" style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:140px;cursor:pointer">
+      <div style="font-size:28px;margin-bottom:8px">＋</div>
+      <div style="font-weight:600;font-size:14px">আপনার শপ খুলুন</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">বিনামূল্যে শুরু করুন</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section>
+  <div class="sec-header row">
+    <div>
+      <div class="sec-label">সেরা পিক</div>
+      <h2 class="sec-title">আজকের ফিচার্ড পণ্য</h2>
+    </div>
+    <a href="#" class="see-all">সব পণ্য দেখুন →</a>
+  </div>
+  <div class="products-grid">
+    <div class="product-card fade-up">
+      <div class="product-img" style="background:#EEF5FF">🎧</div>
+      <div class="product-body">
+        <div class="product-name">ওয়্যারলেস হেডফোন Pro</div>
+        <div class="product-vendor">TechGadget BD</div>
+        <div class="product-price">৳২,৪৯০ <span class="product-type type-physical">ফিজিক্যাল</span></div>
+      </div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img" style="background:#FFF0F5">💋</div>
+      <div class="product-body">
+        <div class="product-name">লিপস্টিক কালেকশন</div>
+        <div class="product-vendor">GlowLab</div>
+        <div class="product-price">৳৬৫০ <span class="product-type type-physical">ফিজিক্যাল</span></div>
+      </div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img" style="background:#F0FFF8">📊</div>
+      <div class="product-body">
+        <div class="product-name">বিজনেস টেমপ্লেট প্যাক</div>
+        <div class="product-vendor">DigiFront</div>
+        <div class="product-price">৳৩৯০ <span class="product-type type-digital">ডিজিটাল</span></div>
+      </div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img" style="background:#FFFBF0">👘</div>
+      <div class="product-body">
+        <div class="product-name">ঈদ স্পেশাল কুর্তা</div>
+        <div class="product-vendor">FashionStop</div>
+        <div class="product-price">৳১,২৯০ <span class="product-type type-physical">ফিজিক্যাল</span></div>
+      </div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img" style="background:#EEF5FF">⌚</div>
+      <div class="product-body">
+        <div class="product-name">স্মার্টওয়াচ Ultra</div>
+        <div class="product-vendor">TechGadget BD</div>
+        <div class="product-price">৳৩,৮৯০ <span class="product-type type-physical">ফিজিক্যাল</span></div>
+      </div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img" style="background:#F5EEFF">🎨</div>
+      <div class="product-body">
+        <div class="product-name">লোগো ডিজাইন সার্ভিস</div>
+        <div class="product-vendor">DigiFront</div>
+        <div class="product-price">৳৮৯০ <span class="product-type type-digital">ডিজিটাল</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-bg" id="how">
+  <div class="sec-header" style="max-width:560px">
+    <div class="sec-label">প্রক্রিয়া</div>
+    <h2 class="sec-title">কীভাবে কাজ করে BazaarBD?</h2>
+    <p class="sec-sub">ক্রেতা হোন বা বিক্রেতা — প্রক্রিয়াটি সহজ, স্বচ্ছ এবং নিরাপদ।</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num-big">০১</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-title" style="color:#fff">পণ্য বা বিক্রেতা খুঁজুন</div>
+      <div class="step-desc">সার্চ বার বা ক্যাটাগরি ব্রাউজ করে সহজেই পছন্দের পণ্য খুঁজুন।</div>
+    </div>
+    <div class="step">
+      <div class="step-num-big">০২</div>
+      <div class="step-icon">🛒</div>
+      <div class="step-title" style="color:#fff">কার্টে যোগ করুন</div>
+      <div class="step-desc">একাধিক বিক্রেতার পণ্য একসাথে কার্টে রেখে অর্ডার করুন।</div>
+    </div>
+    <div class="step">
+      <div class="step-num-big">০৩</div>
+      <div class="step-icon">💳</div>
+      <div class="step-title" style="color:#fff">নিরাপদে পেমেন্ট করুন</div>
+      <div class="step-desc">বিকাশ, নগদ, কার্ড বা ক্যাশ অন ডেলিভারিতে পেমেন্ট করুন।</div>
+    </div>
+    <div class="step">
+      <div class="step-num-big">০৪</div>
+      <div class="step-icon">📦</div>
+      <div class="step-title" style="color:#fff">পণ্য পান বা ডাউনলোড করুন</div>
+      <div class="step-desc">ফিজিক্যাল পণ্য দরজায় পৌঁছাবে, ডিজিটাল পণ্য তাৎক্ষণিক ডাউনলোড হবে।</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust-section">
+  <div class="sec-header" style="text-align:center;max-width:500px;margin:0 auto 40px">
+    <div class="sec-label">আমাদের প্রতিশ্রুতি</div>
+    <h2 class="sec-title">কেন BazaarBD বিশ্বাসযোগ্য?</h2>
+  </div>
+  <div class="trust-grid">
+    <div class="trust-card fade-up">
+      <div class="trust-card-icon">🛡️</div>
+      <div class="trust-card-title">১০০% ভেরিফাইড ভেন্ডর</div>
+      <div class="trust-card-desc">প্রতিটি বিক্রেতা NID যাচাইয়ের মাধ্যমে অনুমোদিত। নকল বা প্রতারণামূলক শপ নেই।</div>
+    </div>
+    <div class="trust-card fade-up">
+      <div class="trust-card-icon">↩️</div>
+      <div class="trust-card-title">৭ দিনের রিটার্ন পলিসি</div>
+      <div class="trust-card-desc">পণ্য পেয়ে সন্তুষ্ট না হলে ৭ দিনের মধ্যে ফেরত দিন, পূর্ণ অর্থ ফেরত পাবেন।</div>
+    </div>
+    <div class="trust-card fade-up">
+      <div class="trust-card-icon">💸</div>
+      <div class="trust-card-title">ক্যাশ অন ডেলিভারি</div>
+      <div class="trust-card-desc">পণ্য হাতে পেয়ে পেমেন্ট করুন। অনলাইন পেমেন্টে ভয় নেই।</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="sec-header" style="text-align:center;max-width:480px;margin:0 auto 40px">
+    <div class="sec-label">রিভিউ</div>
+    <h2 class="sec-title">ক্রেতা ও বিক্রেতারা কী বলছেন?</h2>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card fade-up">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"ডেলিভারি অনেক দ্রুত ছিল এবং পণ্যের মান আশার চেয়ে বেশি ভালো। BazaarBD-এ কেনাকাটা করে সত্যিই খুশি।"</p>
+      <div class="t-author">
+        <div class="t-avatar" style="background:#EEF5FF;color:#1A4FA8">RA</div>
+        <div><div class="t-name">রাকিব আহমেদ</div><div class="t-role">ক্রেতা, ঢাকা</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"মাত্র ৫% কমিশনে শপ চালাতে পারছি। প্রতি সপ্তাহে বিকাশে পেমেন্ট পাই। এর চেয়ে ভালো প্ল্যাটফর্ম আর নেই।"</p>
+      <div class="t-author">
+        <div class="t-avatar" style="background:#FFF0F5;color:#9B2458">FH</div>
+        <div><div class="t-name">ফারহানা হক</div><div class="t-role">বিক্রেতা, GlowLab</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up">
+      <div class="t-stars">★★★★☆</div>
+      <p class="t-text">"ডিজিটাল প্রোডাক্ট বিক্রির জন্য এটি সেরা জায়গা। ইনস্ট্যান্ট ডেলিভারি সিস্টেম অসাধারণ।"</p>
+      <div class="t-author">
+        <div class="t-avatar" style="background:#F0FFF8;color:#0a6b4e">MI</div>
+        <div><div class="t-name">মাহমুদুল ইসলাম</div><div class="t-role">বিক্রেতা, DigiFront</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VENDOR CTA / REGISTRATION -->
+<section class="vendor-cta-section" id="sell">
+  <div class="vendor-cta-inner">
+    <div>
+      <div class="sec-label">বিক্রেতাদের জন্য</div>
+      <h2 class="sec-title">আপনার শপ খুলুন আজই — বিনামূল্যে</h2>
+      <p class="sec-sub" style="margin-bottom:0">হাজারো ক্রেতার কাছে আপনার পণ্য পৌঁছে দিন। শুরু করতে মাত্র ৩ মিনিট।</p>
+      <ul class="benefit-list">
+        <li class="benefit-item">
+          <div class="benefit-icon">💰</div>
+          <div class="benefit-text"><strong>মাত্র ৫% কমিশন</strong><span>বাজারের সবচেয়ে কম কমিশন রেট</span></div>
+        </li>
+        <li class="benefit-item">
+          <div class="benefit-icon">⚡</div>
+          <div class="benefit-text"><strong>সাপ্তাহিক পেমেন্ট</strong><span>বিকাশ, নগদ বা ব্যাংকে সরাসরি</span></div>
+        </li>
+        <li class="benefit-item">
+          <div class="benefit-icon">🏅</div>
+          <div class="benefit-text"><strong>ভেরিফাইড ব্যাজ</strong><span>NID যাচাইয়ের মাধ্যমে বিশ্বাসযোগ্যতা</span></div>
+        </li>
+        <li class="benefit-item">
+          <div class="benefit-icon">📱</div>
+          <div class="benefit-text"><strong>ডোকান ড্যাশবোর্ড</strong><span>মোবাইল থেকে শপ ম্যানেজ করুন</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reg-panel">
+      <div class="reg-title">বিক্রেতা রেজিস্ট্রেশন</div>
+      <div class="reg-sub">বিনামূল্যে শুরু করুন — কোনো সেটআপ ফি নেই</div>
+      <div class="form-row">
+        <div class="form-field"><label>পুরো নাম *</label><input type="text" placeholder="আপনার নাম"></div>
+        <div class="form-field"><label>মোবাইল *</label><input type="tel" placeholder="০১৭XXXXXXXXX"></div>
+      </div>
+      <div class="form-field"><label>ইমেইল *</label><input type="email" placeholder="email@example.com"></div>
+      <div class="form-row">
+        <div class="form-field"><label>শপের নাম *</label><input type="text" placeholder="আপনার শপ"></div>
+        <div class="form-field"><label>ক্যাটাগরি *</label>
+          <select>
+            <option>গ্যাজেট ও ইলেকট্রনিক্স</option>
+            <option>কসমেটিকস ও বিউটি</option>
+            <option>পোশাক ও ফ্যাশন</option>
+            <option>ডিজিটাল প্রোডাক্ট</option>
+          </select>
+        </div>
+      </div>
+      <button class="form-submit" onclick="this.textContent='✓ সফলভাবে রেজিস্ট্রেশন হয়েছে!';this.style.background='#0D9E75'">রেজিস্ট্রেশন করুন ও শপ খুলুন →</button>
+      <p class="form-note">রেজিস্ট্রেশন করে আপনি আমাদের শর্তাবলীতে সম্মত হচ্ছেন। ২৪ ঘণ্টার মধ্যে অ্যাপ্রুভাল।</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Bazaar<span>BD</span></div>
+      <p class="footer-desc">বাংলাদেশের বিশ্বাসযোগ্য মাল্টি-ভেন্ডর মার্কেটপ্লেস। গ্যাজেট, কসমেটিকস, পোশাক ও ডিজিটাল পণ্যের সেরা গন্তব্য।</p>
+    </div>
+    <div>
+      <div class="footer-heading">মার্কেটপ্লেস</div>
+      <ul class="footer-links">
+        <li><a href="#">সব পণ্য</a></li>
+        <li><a href="#">গ্যাজেট</a></li>
+        <li><a href="#">কসমেটিকস</a></li>
+        <li><a href="#">পোশাক</a></li>
+        <li><a href="#">ডিজিটাল</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">বিক্রেতা</div>
+      <ul class="footer-links">
+        <li><a href="#">শপ খুলুন</a></li>
+        <li><a href="#">বিক্রেতা গাইড</a></li>
+        <li><a href="#">কমিশন পলিসি</a></li>
+        <li><a href="#">পেমেন্ট সিস্টেম</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">সাহায্য</div>
+      <ul class="footer-links">
+        <li><a href="#">যোগাযোগ</a></li>
+        <li><a href="#">রিটার্ন পলিসি</a></li>
+        <li><a href="#">গোপনীয়তা নীতি</a></li>
+        <li><a href="#">শর্তাবলী</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© ২০২৫ BazaarBD। সর্বস্বত্ব সংরক্ষিত।</span>
+    <span>Made with ❤️ in Bangladesh</span>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.12});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
